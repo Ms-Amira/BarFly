@@ -57,7 +57,7 @@ class BarUpdate(UpdateView):
 
 def assoc_beverage(request, bar_id, beverage_id):
 	Bar.objects.get(id=bar_id).beverages.add(beverage_id)
-	return redirect('beverages_detail', bar_id=bar_id)
+	return redirect('detail', bar_id=bar_id)
 
 
 class BeverageList(ListView):
@@ -69,6 +69,7 @@ class BeverageDetail(DetailView):
 class BeverageCreate(CreateView):
   model = Beverage
   fields = ['bev_name', 'ingredients', 'price', 'is_alcohol']
+  
   def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
