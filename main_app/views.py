@@ -35,6 +35,13 @@ def bars_index(request):
     bars = Bar.objects.filter(user=request.user)
     return render(request, 'bars/index.html', {'bars': bars})
 
+def bars_detail(request, bar_id):
+    bar = Bar.objects.get(id=bar_id)
+    beverages_bar_doesnt_have = Beverage.objects.exclude(id__in = bar.beverages.all().values_list('id'))
+    pass
+    # feeding_form = FeedingForm()
+    # return render(request, 'cats/detail.html', {'cat': cat, 'feeding_form': feeding_form, 'toys': toys_cat_doesnt_have})
+
 class BarCreate(CreateView):
     model = Bar
     fields = ['name', 'address', 'theme', 'site_traffic', 'has_cover']
