@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-from .models import Bar
+from .models import Bar, Beverage
 from botocore.exceptions import ClientError
 import uuid
 import boto3
@@ -32,15 +32,14 @@ def about(request):
     return render(request, 'about.html')
 
 def bars_index(request):
-    bars = Bar.objects.filter(user=request.user)
+    bars = Bar.objects.all()
     return render(request, 'bars/index.html', {'bars': bars})
 
 def bars_detail(request, bar_id):
     bar = Bar.objects.get(id=bar_id)
     beverages_bar_doesnt_have = Beverage.objects.exclude(id__in = bar.beverages.all().values_list('id'))
-    pass
-    # feeding_form = FeedingForm()
-    # return render(request, 'cats/detail.html', {'cat': cat, 'feeding_form': feeding_form, 'toys': toys_cat_doesnt_have})
+    
+    return render(request, 'bars/detail.html', {'bar': bar, 'beverages': beverages_bar_doesnt_have})
 
 class BarCreate(CreateView):
     model = Bar
