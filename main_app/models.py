@@ -13,6 +13,9 @@ class Beverage(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.bev_name}"
+
 
 
 
@@ -27,6 +30,9 @@ class Bar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     beverages = models.ManyToManyField(Beverage)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Photo(models.Model):
