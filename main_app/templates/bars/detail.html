@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Bar List</h1>
+<h1>Bar Details</h1>
 
 
-{% for bar in bars %}
+
 	<div class="card">
 		<div class="card-content">
 			<span class="card-title">{{ bar.name }}</span>
@@ -12,13 +12,16 @@
 			<p>Theme: {{ bar.theme }}</p>
 			<p>Popularity: {{ bar.site_traffic }}</p>
             {% if has_cover %}
-                <p>Cover: Yes</p>
+                <p>Cover Charge: Yes</p>
             {% else %}
-                <p>Cover: No</p>
+                <p>Cover Charge: No</p>
             {% endif %}
+		</div>
+		<div class="card-action">
+			<a href="{% url 'bars_update' bar.id %}">Edit</a>
 		</div>
 	</div>
 
-{% endfor %}
+
 
 {% endblock %}

@@ -28,14 +28,14 @@ class Bar(models.Model):
     address = models.CharField(max_length=100)
     theme = models.CharField(max_length=50)
     site_traffic = models.IntegerField()
-    has_cover = models.BooleanField(default=BOOLS[0][0], choices=BOOLS)
+    has_cover = models.BooleanField('Cover Charge',default=BOOLS[0][0], choices=BOOLS)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     beverages = models.ManyToManyField(Beverage)
     
     def get_absolute_url(self):
-        return reverse('index', kwargs={'pk': self.pk})
+        return reverse('detail', kwargs={'bar_id': self.id})
 
     def __str__(self):
         return f"{self.name}"

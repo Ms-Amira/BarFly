@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Bar, Beverage
 from botocore.exceptions import ClientError
 import uuid
@@ -47,3 +47,10 @@ class BarCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+class BarUpdate(UpdateView):
+   model = Bar
+   fields = ['name', 'address', 'theme', 'has_cover']
+
+
+   
