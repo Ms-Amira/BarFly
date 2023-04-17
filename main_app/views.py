@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from .models import Bar, Beverage
 from botocore.exceptions import ClientError
 import uuid
@@ -52,5 +53,33 @@ class BarUpdate(UpdateView):
    model = Bar
    fields = ['name', 'address', 'theme', 'has_cover']
 
+
+
+def assoc_beverage(request, bar_id, beverage_id):
+	Bar.objects.get(id=bar_id).beverages.add(beverage_id)
+	return redirect('beverages_detail', bar_id=bar_id)
+
+
+class BeverageList(ListView):
+  model = Beverage
+
+class BeverageDetail(DetailView):
+  model = Beverage
+
+class BeverageCreate(CreateView):
+  model = Beverage
+  fields = ['bev_name', 'ingredients', 'price', 'is_alcohol']
+  def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+  success_url = '/bars/'
+
+class BeverageUpdate(UpdateView):
+  model = Beverage
+  fields = '__all__'
+
+class BeverageDelete(DeleteView):
+  model = Beverage
+  success_url = '/beverages/'
 
    

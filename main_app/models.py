@@ -4,23 +4,26 @@ from django.core.validators import MinValueValidator
 from django.urls import reverse
 from datetime import date
 
+BOOLS = (
+    (True , 'Yes'),
+    (False, 'No')
+)
 
 class Beverage(models.Model):
-    bev_name = models.CharField(max_length=50)
+    bev_name = models.CharField('Libation', max_length=50)
     ingredients = models.TextField()
     price = models.DecimalField(max_digits=25, decimal_places=2, validators=[MinValueValidator(1)])
-    is_alcohol = models.BooleanField(default=True)
+    is_alcohol = models.BooleanField('Contains Alcohol', choices=BOOLS, default=BOOLS[0][0])
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.bev_name}"
+    def get_absolute_url(self):
+        return reverse('beverages_detail', kwargs={'pk': self.id})
 
 
-BOOLS = (
-    (True , 'Yes'),
-    (False, 'No')
-)
+
 
 
 class Bar(models.Model):
