@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+{% if object %}
+	<h1>Edit <span class="teal-text">{{object.name}}</span></h1>
+{% else %}
+	<h1>Add A Bar</h1>
+{% endif %}
+	
+
+<form action="" method="POST">
+	{% csrf_token %}
+	<table>
+		{{ form.as_table}}	
+	</table>
+	<button type="submit" class="btn">Submit</button>
+</form>
+
+<script>
+	const selectEl = document.getElementById('id_has_cover');
+	M.FormSelect.init(selectEl);
+</script>
+	
+{% endblock content %}
