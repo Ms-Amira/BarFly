@@ -17,7 +17,10 @@ class Beverage(models.Model):
         return f"{self.bev_name}"
 
 
-
+BOOLS = (
+    (True , 'Yes'),
+    (False, 'No')
+)
 
 
 class Bar(models.Model):
@@ -25,7 +28,7 @@ class Bar(models.Model):
     address = models.CharField(max_length=100)
     theme = models.CharField(max_length=50)
     site_traffic = models.IntegerField()
-    has_cover = models.BooleanField(default=False)
+    has_cover = models.BooleanField(default=BOOLS[0][0], choices=BOOLS)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
