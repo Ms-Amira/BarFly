@@ -7,6 +7,7 @@ import uuid
 import boto3
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -26,6 +27,15 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+def add_review(request, bar_id):
+  form = ReviewForm(request.POST)
+  if form.is_valid():
+      new_review = form.save(commit=False)
+      new_review.bar_id = bar_id
+      new_review.user = request.user
+      new_review.save()
+  return redirect('detail', bar_id=bar_id)
+
 def home(request):
     return render(request, 'home.html')
 
@@ -39,8 +49,8 @@ def bars_index(request):
 def bars_detail(request, bar_id):
     bar = Bar.objects.get(id=bar_id)
     beverages_bar_doesnt_have = Beverage.objects.exclude(id__in = bar.beverages.all().values_list('id'))
-    
-    return render(request, 'bars/detail.html', {'bar': bar, 'beverages': beverages_bar_doesnt_have})
+    review_form = ReviewForm()
+    return render(request, 'bars/detail.html', {'bar': bar, 'review_form': review_form, 'beverages': beverages_bar_doesnt_have})
 
 class BarCreate(CreateView):
     model = Bar
@@ -81,6 +91,8 @@ class BeverageUpdate(UpdateView):
 
 class BeverageDelete(DeleteView):
   model = Beverage
-  success_url = '/beverages/'
+  success_url = '/bars/'
+
+
 
    
