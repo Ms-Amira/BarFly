@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Bar, Beverage
+from .models import Bar, Beverage, Review
 from botocore.exceptions import ClientError
 import uuid
 import boto3
@@ -94,5 +94,6 @@ class BeverageDelete(DeleteView):
   success_url = '/bars/'
 
 
-
-   
+class ReviewDelete(DeleteView):
+   model = Review
+   success_url = '/bars/'

@@ -44,6 +44,7 @@
             <td>{{review.get_rating_display}}</td>
             <td>{{review.comment}}</td>
             <td>{{review.user}}</td>
+            <td><a href="{% url 'delete_review' bar.id %}" for="Delete">Delete</a></td>
           </tr>
         {% endfor %}
     </tbody>
@@ -92,8 +93,10 @@
             <form action="{% url 'assoc_beverage' bar.id beverage.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn">Add</button>
+              <span class="right">
 			  <a href="{% url 'beverages_update' beverage.id %}">Edit</a>
 			  <a href="{% url 'beverages_delete' beverage.id %}">Delete</a>
+            </span>
             </form>
           </div>
         </div>
