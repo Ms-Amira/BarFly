@@ -10,6 +10,7 @@ urlpatterns = [
   path('bars/<int:bar_id>/', views.bars_detail, name='detail'),
   path('bars/create/', views.BarCreate.as_view(), name='bars_create'),
   path('bars/<int:pk>/update/', views.BarUpdate.as_view(), name='bars_update'),
+  path('bars/<int:bar_id>/add_photo/', views.add_photo, name='add_photo'),
   path('bars/<int:bar_id>/assoc_beverage/<int:beverage_id>/', views.assoc_beverage, name='assoc_beverage'),
   path('bars/<int:bar_id>/add_review/', views.add_review, name='add_review'),
   path('bars/<int:pk>/delete_review/', views.ReviewDelete.as_view(), name='delete_review'),
