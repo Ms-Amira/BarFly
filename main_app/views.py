@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Bar, Beverage
+from .models import Bar, Beverage, Review, Photo
 from botocore.exceptions import ClientError
 import uuid
 import boto3
@@ -26,6 +26,25 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+
+S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
+BUCKET='softwaredev'
+
+@login_required
+def add_photo(request, bar_id):
+   photo_file = request.FILES.get('photo-file', None)
+   if photo_file:
+      s3 = boto3.client('s3')
+      key = 'barfly/' + uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+      try:
+         s3.upload_fileobj(photo_file, BUCKET, key)
+         url = f'{S3_BASE_URL}{BUCKET}/{key}'
+         Photo.objects.create(url=url, bar_id=bar_id)
+      except ClientError as e:
+         print(e, " error from aws!")
+      return redirect('detail', bar_id=bar_id)
+      
 
 def add_review(request, bar_id):
   form = ReviewForm(request.POST)
@@ -78,7 +97,7 @@ class BeverageDetail(DetailView):
 
 class BeverageCreate(CreateView):
   model = Beverage
-  fields = ['bev_name', 'ingredients', 'price', 'is_alcohol']
+  fields = ['bev_name', 'ingredients', 'price', 'is_alcohol', 'img']
   
   def form_valid(self, form):
         form.instance.user = self.request.user
@@ -93,6 +112,6 @@ class BeverageDelete(DeleteView):
   model = Beverage
   success_url = '/bars/'
 
-
-
-   
+class ReviewDelete(DeleteView):
+   model = Review
+   success_url = '/bars/'
