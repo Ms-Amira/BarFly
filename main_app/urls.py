@@ -11,6 +11,7 @@ urlpatterns = [
   path('bars/create/', views.BarCreate.as_view(), name='bars_create'),
   path('bars/<int:pk>/update/', views.BarUpdate.as_view(), name='bars_update'),
   path('bars/<int:bar_id>/assoc_beverage/<int:beverage_id>/', views.assoc_beverage, name='assoc_beverage'),
+  path('bars/<int:bar_id>/add_review/', views.add_review, name='add_review'),
   path('beverages/', views.BeverageList.as_view(), name='beverages_index'),
   path('beverages/<int:pk>/', views.BeverageDetail.as_view(), name='beverages_detail'),
   path('beverages/create/', views.BeverageCreate.as_view(), name='beverages_create'),
