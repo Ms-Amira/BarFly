@@ -47,15 +47,24 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-              {{beverage.bev_name}}
+              <h4>{{beverage.bev_name}}</h4>
             </span>
+              <p><b>Ingredients:</b> {{beverage.ingredients}}</p><br>
+              <p><b>Price:</b> {{beverage.price}}</p><br>
+              <p>
+              {% if beverage.is_alcohol %}
+                <p>Contains Alcohol</p>
+                {% else %}
+                <p>No Alcohol</p>
+              {% endif %}
+                </p>
           </div>
           <div class="card-action">
             <form action="{% url 'assoc_beverage' bar.id beverage.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn">Add</button>
-			  <a href="{% url 'beverages_update' bar.id %}">Edit</a>
-			  <a href="{% url 'beverages_delete' bar.id %}">Delete</a>
+			  <a href="{% url 'beverages_update' beverage.id %}">Edit</a>
+			  <a href="{% url 'beverages_delete' beverage.id %}">Delete</a>
             </form>
           </div>
         </div>

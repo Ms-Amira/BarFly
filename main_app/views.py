@@ -81,6 +81,6 @@ class BeverageUpdate(UpdateView):
 
 class BeverageDelete(DeleteView):
   model = Beverage
-  success_url = '/beverages/'
+  success_url = '/bars/'
 
    
