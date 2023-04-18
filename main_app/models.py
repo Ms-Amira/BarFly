@@ -18,8 +18,8 @@ class Beverage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     img = models.URLField(max_length=500, default = 'Enter URL')
 
-    def __str__(self):
-        return f"{self.bev_name}"
+    # def __str__(self):
+    #     return f"{self.bev_name}"
     def get_absolute_url(self):
         return reverse('beverages_detail', kwargs={'pk': self.id})
 

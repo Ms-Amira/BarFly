@@ -5,6 +5,7 @@
 
 
 
+
 <div class="row">
     <div class="col s6">
         <div class="card">
@@ -25,6 +26,32 @@
         </div>
     </div>
 
+    <div class="col s6">
+
+	    <form action="{% url 'add_review' bar.id %}" method="POST">
+		    {% csrf_token %}
+		    {{ review_form.as_p }}
+		    <input type="submit" class="btn" value="Add Review">
+	    </form>
+
+        <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Rating</th><th>Comment</th><th>Username</th></tr>
+      </thead>
+      <tbody>
+        {% for review in bar.review_set.all %}
+          <tr>
+            <td>{{review.date}}</td>
+            <td>{{review.get_rating_display}}</td>
+            <td>{{review.comment}}</td>
+            <td>{{review.user}}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+	<hr>
     <div class="col s6">
 
 	    <form action="{% url 'add_review' bar.id %}" method="POST">
@@ -154,6 +181,22 @@
 
 	const selectEl = document.querySelector('#id_rating');
 	M.FormSelect.init(selectEl)
+
+
+<script>
+
+	const dateEl = document.querySelector('#id_date');
+	M.Datepicker.init(dateEl, {
+		format: 'yyyy-mm-dd', // this how django formats the date in the model
+		defaultDate: new Date(),
+		setDefaultDate: true,
+		autoClose: true
+	})
+
+
+	const selectEl = document.querySelector('#id_rating');
+	M.FormSelect.init(selectEl)
+
 
 </script>
 

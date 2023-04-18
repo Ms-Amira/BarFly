@@ -27,6 +27,7 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+
 S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
 BUCKET='softwaredev'
 
@@ -110,7 +111,6 @@ class BeverageUpdate(UpdateView):
 class BeverageDelete(DeleteView):
   model = Beverage
   success_url = '/bars/'
-
 
 class ReviewDelete(DeleteView):
    model = Review
