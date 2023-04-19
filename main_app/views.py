@@ -27,9 +27,9 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-
-S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
-BUCKET='softwaredev'
+# Change this to yours
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET='charlesthegr8'
 
 @login_required
 def add_photo(request, bar_id):
@@ -45,7 +45,7 @@ def add_photo(request, bar_id):
          print(e, " error from aws!")
       return redirect('detail', bar_id=bar_id)
       
-
+@login_required
 def add_review(request, bar_id):
   form = ReviewForm(request.POST)
   if form.is_valid():
@@ -71,23 +71,27 @@ def bars_detail(request, bar_id):
     review_form = ReviewForm()
     return render(request, 'bars/detail.html', {'bar': bar, 'review_form': review_form, 'beverages': beverages_bar_doesnt_have})
 
-class BarCreate(CreateView):
+class BarCreate(LoginRequiredMixin, CreateView):
     model = Bar
     fields = ['name', 'address', 'theme', 'site_traffic', 'has_cover']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-class BarUpdate(UpdateView):
+class BarUpdate(LoginRequiredMixin, UpdateView):
    model = Bar
    fields = ['name', 'address', 'theme', 'has_cover']
 
 
-
+@login_required
 def assoc_beverage(request, bar_id, beverage_id):
 	Bar.objects.get(id=bar_id).beverages.add(beverage_id)
 	return redirect('detail', bar_id=bar_id)
 
+@login_required
+def un_assoc_beverage(request, bar_id, beverage_id):
+	Bar.objects.get(id=bar_id).beverages.remove(beverage_id)
+	return redirect('detail', bar_id=bar_id)
 
 class BeverageList(ListView):
   model = Beverage
@@ -95,7 +99,7 @@ class BeverageList(ListView):
 class BeverageDetail(DetailView):
   model = Beverage
 
-class BeverageCreate(CreateView):
+class BeverageCreate(LoginRequiredMixin, CreateView):
   model = Beverage
   fields = ['bev_name', 'ingredients', 'price', 'is_alcohol', 'img']
   
@@ -104,14 +108,14 @@ class BeverageCreate(CreateView):
         return super().form_valid(form)
   success_url = '/bars/'
 
-class BeverageUpdate(UpdateView):
+class BeverageUpdate(LoginRequiredMixin, UpdateView):
   model = Beverage
   fields = '__all__'
 
-class BeverageDelete(DeleteView):
+class BeverageDelete(LoginRequiredMixin, DeleteView):
   model = Beverage
   success_url = '/bars/'
 
-class ReviewDelete(DeleteView):
+class ReviewDelete(LoginRequiredMixin, DeleteView):
    model = Review
    success_url = '/bars/'
