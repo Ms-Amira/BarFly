@@ -202,8 +202,11 @@
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, {edge: 'left', draggable: false});
 
-
-
+    var trigger = document.getElementById('sidenav-trigger');
+    trigger.addEventListener('mouseover', function() {
+      instances[0].open();
+    });
+  });
 </script>
 
 {% endblock %}
