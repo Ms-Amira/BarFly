@@ -16,7 +16,7 @@ class Beverage(models.Model):
     is_alcohol = models.BooleanField('Contains Alcohol', choices=BOOLS, default=BOOLS[0][0])
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    img = models.URLField(max_length=500, default = 'Enter URL')
+    img = models.URLField(max_length=500, default = '')
 
     # def __str__(self):
     #     return f"{self.bev_name}"

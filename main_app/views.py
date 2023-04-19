@@ -27,9 +27,9 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-
-S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
-BUCKET='softwaredev'
+# Change this to yours
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET='charlesthegr8'
 
 @login_required
 def add_photo(request, bar_id):
@@ -71,7 +71,7 @@ def bars_detail(request, bar_id):
     review_form = ReviewForm()
     return render(request, 'bars/detail.html', {'bar': bar, 'review_form': review_form, 'beverages': beverages_bar_doesnt_have})
 
-class BarCreate(CreateView):
+class BarCreate(LoginRequiredMixin, CreateView):
     model = Bar
     fields = ['name', 'address', 'theme', 'site_traffic', 'has_cover']
     def form_valid(self, form):
@@ -88,6 +88,9 @@ def assoc_beverage(request, bar_id, beverage_id):
 	Bar.objects.get(id=bar_id).beverages.add(beverage_id)
 	return redirect('detail', bar_id=bar_id)
 
+def un_assoc_beverage(request, bar_id, beverage_id):
+	Bar.objects.get(id=bar_id).beverages.remove(beverage_id)
+	return redirect('detail', bar_id=bar_id)
 
 class BeverageList(ListView):
   model = Beverage

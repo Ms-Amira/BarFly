@@ -22,12 +22,12 @@
 				</ul>
 				<ul class="right">
 					<li><a href="{% url 'about' %}">About</a></li>
+					<li><a href="{% url 'index' %}">View All Bars</a></li>
 					{% if user.is_authenticated %}
 					  <li><a href="{% url 'bars_create' %}">Add a Bar</a></li>
 					  <li><a href="{% url 'beverages_create' %}">Add a Beverage</a></li>
-					  <li><a href="{% url 'index' %}">View All Bars</a></li>
 					  <li><a href="{% url 'logout' %}">Log Out</a></li>
-					{% else %}
+					  {% else %}
 					<li><a href="{% url 'signup' %}">Sign Up</a></li>
 					<li><a href="{% url 'login' %}">Log In</a></li>
 					{% endif %}
