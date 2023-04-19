@@ -29,7 +29,7 @@ def signup(request):
 
 # Change this to yours
 S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET='charlesthegr8'
+BUCKET='catcollector-bucket-2-21'
 
 @login_required
 def add_photo(request, bar_id):
