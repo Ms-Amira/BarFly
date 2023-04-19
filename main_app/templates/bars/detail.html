@@ -1,6 +1,23 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
 
-<h1>Bar Details</h1>
+<div id="sidenav-trigger" style="width: 50px; height: 100%; position: fixed; z-index: 998; top: 0; left: 0;"></div>
+
+	
+	<ul id="slide-out" style="width: 150px; background-image: url(https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Ftheseaport.nyc%2Fwp-content%2Fuploads%2F2021%2F05%2Fthis-is-not-a-drill%E2%80%A6-garden-bar-season-is-back-in-the-seaport-head-down-to-the-neighborhood-to-gra.jpg);" class="sidenav sidenav-custom-width">
+		
+
+		  <li><a href="#Bardetails">Bar Details</a></li>
+		  <li><a href="#BarPics">Bar Pics</a></li>
+		  <li><a href="#DrankPics">Drank Pics</a></li>
+		
+		
+		</ul>
+	  
+
+
+
+<h1 id='Bardetails'>Bar Details</h1>
 
 <div class="row">
   <div class="col s6">
@@ -21,7 +38,7 @@
       </div>
     </div>
 
-	<div class="col s12">
+	<div class="col s12" id="BarPics">
 	 {% for photo in bar.photo_set.all %}
     <img class="responsive-img card-panel" src="{{photo.url}}" />
     {% empty %}
@@ -44,10 +61,19 @@
 </div>
 
   <div class="col s6">
-    <form action="{% url 'add_review' bar.id %}" method="POST">
+
+
+{% if user.is_authenticated %}
+	<form action="{% url 'add_review' bar.id %}" method="POST">
       {% csrf_token %} {{ review_form.as_p }}
       <input type="submit" class="btn" value="Add Review" />
     </form>
+	{% else %}
+	<h4><a href="{% url 'login' %}">Log In</a> to Add Review</h4>
+{% endif %}
+	
+
+    
 
     <table class="striped">
       <thead>
@@ -75,7 +101,7 @@
 
 <div class="row">
   <div class="col s6">
-    <h3>{{ bar.name }} Dranks</h3>
+    <h3 id="DrankPics">{{ bar.name }} Dranks</h3>
     {% if bar.beverages.count %} {% for beverage in bar.beverages.all %}
     <div class="card">
       <div class="row">
@@ -171,6 +197,16 @@
 
   const selectEl = document.querySelector("#id_rating");
   M.FormSelect.init(selectEl);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {edge: 'left', draggable: false});
+
+    var trigger = document.getElementById('sidenav-trigger');
+    trigger.addEventListener('mouseover', function() {
+      instances[0].open();
+    });
+  });
 </script>
 
 {% endblock %}

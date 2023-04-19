@@ -45,7 +45,7 @@ def add_photo(request, bar_id):
          print(e, " error from aws!")
       return redirect('detail', bar_id=bar_id)
       
-
+@login_required
 def add_review(request, bar_id):
   form = ReviewForm(request.POST)
   if form.is_valid():
@@ -78,16 +78,17 @@ class BarCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-class BarUpdate(UpdateView):
+class BarUpdate(LoginRequiredMixin, UpdateView):
    model = Bar
    fields = ['name', 'address', 'theme', 'has_cover']
 
 
-
+@login_required
 def assoc_beverage(request, bar_id, beverage_id):
 	Bar.objects.get(id=bar_id).beverages.add(beverage_id)
 	return redirect('detail', bar_id=bar_id)
 
+@login_required
 def un_assoc_beverage(request, bar_id, beverage_id):
 	Bar.objects.get(id=bar_id).beverages.remove(beverage_id)
 	return redirect('detail', bar_id=bar_id)
@@ -98,7 +99,7 @@ class BeverageList(ListView):
 class BeverageDetail(DetailView):
   model = Beverage
 
-class BeverageCreate(CreateView):
+class BeverageCreate(LoginRequiredMixin, CreateView):
   model = Beverage
   fields = ['bev_name', 'ingredients', 'price', 'is_alcohol', 'img']
   
@@ -107,14 +108,14 @@ class BeverageCreate(CreateView):
         return super().form_valid(form)
   success_url = '/bars/'
 
-class BeverageUpdate(UpdateView):
+class BeverageUpdate(LoginRequiredMixin, UpdateView):
   model = Beverage
   fields = '__all__'
 
-class BeverageDelete(DeleteView):
+class BeverageDelete(LoginRequiredMixin, DeleteView):
   model = Beverage
   success_url = '/bars/'
 
-class ReviewDelete(DeleteView):
+class ReviewDelete(LoginRequiredMixin, DeleteView):
    model = Review
    success_url = '/bars/'
