@@ -203,20 +203,6 @@
     var instances = M.Sidenav.init(elems, {edge: 'left', draggable: false});
 
 
-<script>
-
-	const dateEl = document.querySelector('#id_date');
-	M.Datepicker.init(dateEl, {
-		format: 'yyyy-mm-dd', // this how django formats the date in the model
-		defaultDate: new Date(),
-		setDefaultDate: true,
-		autoClose: true
-	})
-
-
-	const selectEl = document.querySelector('#id_rating');
-	M.FormSelect.init(selectEl)
-
 
 </script>
 
