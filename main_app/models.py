@@ -31,18 +31,22 @@ class Bar(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     theme = models.CharField(max_length=50)
-    site_traffic = models.IntegerField()
+    site_traffic = models.IntegerField(default=0)
     has_cover = models.BooleanField('Cover Charge',default=BOOLS[0][0], choices=BOOLS)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     beverages = models.ManyToManyField(Beverage)
     
+    class Meta:
+        ordering = ['-site_traffic']
+
     def get_absolute_url(self):
         return reverse('detail', kwargs={'bar_id': self.id})
 
     def __str__(self):
         return f"{self.name}"
+    
 
 
 class Photo(models.Model):

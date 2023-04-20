@@ -21,12 +21,12 @@
 
 <div class="row">
   <div class="col s6">
-    <div class="card center" style="border-radius: 100px;">
+    <div class="card center" style="border-radius: 15px; background: linear-gradient(rgb(130,177,255), white);">
       <div class="card-content">
         <span class="card-title">{{ bar.name }}</span>
         <p>Address: {{ bar.address }}</p>
         <p>Theme: {{ bar.theme }}</p>
-        <p>Popularity: {{ bar.site_traffic }}</p>
+        <p>Visitors: {{ bar.site_traffic }}</p>
         {% if has_cover %}
         <p>Cover Charge: Yes</p>
         {% else %}
@@ -41,7 +41,7 @@
 
 	<div class="col s12" id="BarPics">
 	 {% for photo in bar.photo_set.all %}
-    <img class="responsive-img card-panel" style="border-radius: 50px;" src="{{photo.url}}" />
+    <img class="responsive-img card-panel" style="border-radius: 50px; background: linear-gradient(rgb(130,177,255), white);" src="{{photo.url}}" />
     {% empty %}
     <div class="card-panel teal-text center-align" style="border-radius: 50px;">No Photos Uploaded</div>
     {% endfor %}
@@ -51,7 +51,7 @@
       enctype="multipart/form-data"
       method="POST"
       class="card-panel center"
-      style="border-radius: 100px;"
+      style="border-radius: 15px; background: linear-gradient(rgb(130,177,255), white);"
     >
       {% csrf_token %}
       <input type="file" name="photo-file" />
@@ -66,7 +66,7 @@
 
 
 {% if user.is_authenticated %}
-	<form action="{% url 'add_review' bar.id %}" method="POST" style="background-color: white; border-top-right-radius: 15px; border-top-left-radius: 15px;" class="center">
+	<form action="{% url 'add_review' bar.id %}" method="POST" style="background-color: white; border-top-right-radius: 15px; border-top-left-radius: 15px; padding: 10px; background: linear-gradient(rgb(130,177,255), white);" class="center">
       {% csrf_token %} {{ review_form.as_p }}
       <input type="submit" class="btn" value="Add Review" />
     </form>
@@ -77,7 +77,7 @@
 
     
 
-    <table class="striped" style="background-color: white; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+    <table class="striped" style="background-color: white; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; background: linear-gradient(rgb(130,177,255), white);">
       <thead>
         <tr>
           <th>Date</th>
@@ -105,7 +105,7 @@
   <div class="col s6">
     <h2 style="text-shadow: 3px 3px 3px black; color: white;" id="DrankPics">{{ bar.name }} Dranks</h2>
     {% if bar.beverages.count %} {% for beverage in bar.beverages.all %}
-    <div class="card">
+    <div class="card" style="border-radius: 15px; background: linear-gradient(rgb(130,177,255), white);">
       <div class="row">
         <div class="col s6">
           <div class="card-content">
@@ -133,7 +133,7 @@
         </div>
         <div class="col s6">
           <div class="card-image">
-            <img class="responsive-img" src="{{beverage.img}}" alt="url" />
+            <img class="responsive-img" style="border-radius: 15px;" src="{{beverage.img}}" alt="url" />
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@
   <div class="col s6">
     <h2 style="text-shadow: 3px 3px 3px black; color: white;">Available Dranks</h2>
     {% if beverages.count %} {% for beverage in beverages.all %}
-    <div class="card">
+    <div class="card" style="border-radius: 15px; background: linear-gradient(rgb(130,177,255), white);">
       <div class="row">
         <div class="col s6">
           <div class="card-content">
@@ -167,11 +167,11 @@
         </div>
         <div class="col s6">
           <div class="card-image">
-            <img class="responsive-img" src="{{beverage.img}}" alt="url" />
+            <img class="responsive-img" style="border-radius: 15px;" src="{{beverage.img}}" alt="url" />
           </div>
         </div>
       </div>
-      <div class="card-action">
+      <div class="card-action" style="border-radius: 15px; background: linear-gradient(rgb(130,177,255), white);">
         <form
           action="{% url 'assoc_beverage' bar.id beverage.id %}"
           method="post"
@@ -191,7 +191,7 @@
 <script>
   const dateEl = document.querySelector("#id_date");
   M.Datepicker.init(dateEl, {
-    format: "yyyy-mm-dd", // this how django formats the date in the model
+    format: "yyyy-mm-dd",
     defaultDate: new Date(),
     setDefaultDate: true,
     autoClose: true,
@@ -201,10 +201,10 @@
   M.FormSelect.init(selectEl);
 
   document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {edge: 'left', draggable: false});
+    const elems = document.querySelectorAll('.sidenav');
+    const instances = M.Sidenav.init(elems, {edge: 'left', draggable: false});
 
-    var trigger = document.getElementById('sidenav-trigger');
+    const trigger = document.getElementById('sidenav-trigger');
     trigger.addEventListener('mouseover', function() {
       instances[0].open();
     });
