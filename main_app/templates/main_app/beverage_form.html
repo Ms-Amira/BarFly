@@ -4,9 +4,9 @@
 {% if object %}
 <h1>Edit <span class="teal-text">{{object.name}}</span></h1>
 {% else %}
-<h1>Add Beverage</h1>
+<h1 style="text-shadow: 3px 3px 3px black; color: white;" class="center">Add Beverage</h1>
 {% endif %}
-<form action="" method="post">
+<form style="border-radius: 15px; padding: 10px; background: linear-gradient(rgb(130,177,255), white);" class="center" action="" method="post">
 	{% csrf_token %}
 	<table>
     {{ form.as_table }}

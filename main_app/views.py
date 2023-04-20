@@ -67,13 +67,15 @@ def bars_index(request):
 
 def bars_detail(request, bar_id):
     bar = Bar.objects.get(id=bar_id)
+    bar.site_traffic += 1
+    bar.save()
     beverages_bar_doesnt_have = Beverage.objects.exclude(id__in = bar.beverages.all().values_list('id'))
     review_form = ReviewForm()
     return render(request, 'bars/detail.html', {'bar': bar, 'review_form': review_form, 'beverages': beverages_bar_doesnt_have})
 
 class BarCreate(LoginRequiredMixin, CreateView):
     model = Bar
-    fields = ['name', 'address', 'theme', 'site_traffic', 'has_cover']
+    fields = ['name', 'address', 'theme', 'has_cover']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
