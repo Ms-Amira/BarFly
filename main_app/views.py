@@ -28,8 +28,8 @@ def signup(request):
   return render(request, 'registration/signup.html', context)
 
 # Change this to yours
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET='catcollector-bucket-2-21'
+S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
+BUCKET='softwaredev'
 
 @login_required
 def add_photo(request, bar_id):

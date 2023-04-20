@@ -43,7 +43,7 @@
 	 {% for photo in bar.photo_set.all %}
     <img class="responsive-img card-panel" style="border-radius: 50px; background: linear-gradient(rgb(130,177,255), white);" src="{{photo.url}}" />
     {% empty %}
-    <div class="card-panel teal-text center-align" style="border-radius: 50px;">No Photos Uploaded</div>
+    <div class="card-panel teal-text center-align" style="border-radius: 50px; background: linear-gradient(rgb(130,177,255), white);">No Photos Uploaded</div>
     {% endfor %}
 
     <form
@@ -139,7 +139,7 @@
       </div>
     </div>
     {% endfor %} {% else %}
-    <h5>No Libations</h5>
+    <h5 style="text-shadow: 3px 3px 3px black; color: white;">No Libations</h5>
     {% endif %}
   </div>
 
@@ -184,7 +184,7 @@
       </div>
     </div>
     {% endfor %} {% else %}
-    <h5>{{bar.name}} Already Has All Dranks Available</h5>
+    <h5 style="text-shadow: 3px 3px 3px black; color: white;">{{bar.name}} Already Has All Dranks Available</h5>
     {% endif %}
   </div>
 </div>

@@ -3,7 +3,7 @@
 
 <h1>Log In</h1>
 
-<form method="post" action="{% url 'login' %}">
+<form style="border-radius: 15px; padding: 10px; background: linear-gradient(rgb(130,177,255), white);" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" class="btn" value="login">
